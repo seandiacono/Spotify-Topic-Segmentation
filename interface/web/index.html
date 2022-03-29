@@ -1,0 +1,149 @@
+<!-- Webpage to request segmented Podcast Transcript and view it -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Podcast Segmentation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <link href="css/style.css" rel="stylesheet" />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <div class="d-flex justify-content-center">
+      <h1 class="title">Podcast Segmentation</h1>
+    </div>
+
+    <div class="d-flex justify-content-center container text-center">
+      <div class="row">
+        <div class="col-sm">
+          <h4>Select Segmentation Technique</h4>
+          <p>
+            Choose the Segmentation Technique that you want to be used on the
+            podcast
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form to ask for segmentation parameters -->
+    <div class="d-flex justify-content-center">
+      <form id="segmentation-form" onsubmit="return false">
+        <div class="form-check form-check-inline">
+          <label class="radio-inline">
+            <input type="radio" name="segmentation-type" value="1" checked />
+            Text Tiling
+          </label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <label class="radio-inline">
+            <input type="radio" name="segmentation-type" value="2" />
+            TextSplit
+          </label>
+        </div>
+
+        <!-- Window Size Input -->
+        <div class="form-group">
+          <label for="window-size">Window Size (w)</label>
+          <input
+            type="number"
+            class="form-control group1"
+            id="window-size"
+            name="window-size"
+            placeholder="Window Size"
+            min="1"
+            value="20"
+          />
+        </div>
+
+        <!-- Block Size Input -->
+        <div class="form-group">
+          <label for="block-size">Block Size (k)</label>
+          <input
+            type="number"
+            class="form-control group1"
+            id="block-size"
+            name="block-size"
+            placeholder="Block Size"
+            min="1"
+            value="10"
+          />
+        </div>
+
+        <!-- Similarity Method Dropdown -->
+        <div class="form-group group1">
+          <label for="similarity-method">Similarity Method</label>
+          <select class="form-control group1" id="similarity-method" name="similarity-method">
+            <option value="BLOCK_COMPARISON">BLOCK_COMPARISON</option>
+            <option value="VOCABULARY_INTRODUCTION">VOCABULARY_INTRODUCTION</option>
+          </select>
+        </div>
+
+        <!-- Smoothing Width Input -->
+        <div class="form-group">
+          <label for="smoothing-width">Smoothing Width</label>
+          <input
+            type="number"
+            class="form-control group1"
+            id="smoothing-width"
+            name="smoothing-width"
+            placeholder="Smoothing Width"
+            min="1"
+            value="2"
+          />
+        </div>
+
+        <!-- Smoothing Rounds Input -->
+        <div class="form-group">
+          <label for="smoothing-rounds">Smoothing Rounds</label>
+          <input
+            type="number"
+            class="form-control group1"
+            id="smoothing-rounds"
+            name="smoothing-rounds"
+            placeholder="Smoothing Rounds"
+            min="1"
+            value="1"
+          />
+        </div>
+
+        <!-- Cutoff Policy Dropdown -->
+        <div class="form-group group1">
+          <label for="cutoff-policy">Cutoff Policy</label>
+          <select class="form-control group1" id="cutoff-policy" name="cutoff-policy">
+            <option value="HC">HC</option>
+            <option value="LC">LC</option>
+          </select>
+
+        <!-- Submit Button -->
+        <div class="form-group text-center">
+          <button
+            type="submit"
+            class="btn btn-primary getButton"
+            onclick="getTranscript()"
+          >
+            Get Transcript
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="loading-div" class="d-flex justify-content-center">
+      <img id="loading" src="assets/loading.gif" alt="loading" />
+    </div>
+
+    <div id="segment-area"></div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+.getButton {
+  margin: 1em;
+  padding: 0.5em;
+}
+
+.title {
+  margin-top: 0.5em;
+}
+
+.segment-title {
+  margin-top: 0.5em;
+}
+
+#segment-area {
+  margin: 0.5em;
+}
+
+#loading {
+  width: 4em;
+  margin: 5em;
+}
+
+#loading-div {
+  visibility: hidden;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
