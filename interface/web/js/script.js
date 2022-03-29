@@ -5,10 +5,12 @@ $(document).ready(function(){
         if (value == 2){
             $("input.group1").prop("disabled", true);
             $("select.group1").prop("disabled", true);
+            $("input.group2").prop("disabled", false);
         }
         else{
             $("input.group1").prop("disabled", false);
             $("select.group1").prop("disabled", false);
+            $("input.group2").prop("disabled", true);
         }
     });
 });
@@ -16,58 +18,47 @@ $(document).ready(function(){
 
 
 function getTranscript(){
-    
+
     url = 'http://127.0.0.1:8000/segment_summary'
 
     var val = document.forms['segmentation-form']['segmentation-type'].value;
-
-    console.log(val);
+    var podcast_index = document.forms['segmentation-form']['podcast-index'].value;
+    var num_segments = document.forms['segmentation-form']['num-segments'].value;
     
     if (val == 1){
         var w = document.forms['segmentation-form']['window-size'].value;
         var k = document.forms['segmentation-form']['block-size'].value;
-        var sim_method = document.forms['segmentation-form']['similarity-method'].value;
         var smooth_width = document.forms['segmentation-form']['smoothing-width'].value;
         var smooth_rounds = document.forms['segmentation-form']['smoothing-rounds'].value;
         var cutoff = document.forms['segmentation-form']['cutoff-policy'].value;
+    }else{
+        var split_penalty = document.forms['segmentation-form']['split-penalty'].value;
     }
-
-    console.log(JSON.stringify({
-        'segmentation_type': val,
-        'window_size': w,
-        'block_size': k,
-        'similarity_method': sim_method,
-        'smoothing_width': smooth_width,
-        'smoothing_rounds': smooth_rounds,
-        'cutoff_policy': cutoff
-    }));
 
     $.ajax({
         url: url,
-        type: 'GET',
+        type: 'POST',
         dataType: 'json',
         data: JSON.stringify({
             'segmentation_type': val,
+            'podcast_index': podcast_index,
+            'num_segments': num_segments,
             'window_size': w,
             'block_size': k,
-            'similarity_method': sim_method,
             'smoothing_width': smooth_width,
             'smoothing_rounds': smooth_rounds,
-            'cutoff_policy': cutoff
+            'cutoff_policy': cutoff,
+            'split_penalty': split_penalty 
         }),
         contentType: 'application/json',
         beforeSend: function() {
-            $('#loading-div').css('visibility', 'visible');
-            document.getElementById('segment-area').innerHTML = '';
+            document.getElementById('segment-area').innerHTML = '<div class="d-flex justify-content-center"><img id="loading" src="assets/loading.gif" alt="loading" /> </div>';
         },
         success: function(data){
-            console.log(data);
+            document.getElementById('segment-area').innerHTML = '';
             data['segments'].forEach(function(segment){
                 document.getElementById('segment-area').innerHTML += "<h4 class=\"segment-title\">" + Object.keys(segment)[0] + "</h4> <div class='segment'>" + Object.values(segment)[0] + "</div>";
             });
         },
-        complete: function(){
-            $('#loading-div').css('visibility', 'hidden');
-        }
     });
 }

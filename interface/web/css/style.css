@@ -11,6 +11,24 @@
   margin-top: 0.5em;
 }
 
+.main-container {
+  margin-top: 2em;
+  width: 95%;
+}
+
+.form-group {
+  margin: 0.5em;
+}
+
+.form-check {
+  padding-left: 0.5em;
+  margin-top: 0.5em;
+}
+
+.title {
+  color: #1db954;
+}
+
 #segment-area {
   margin: 0.5em;
 }
@@ -18,10 +36,6 @@
 #loading {
   width: 4em;
   margin: 5em;
-}
-
-#loading-div {
-  visibility: hidden;
 }
 
 body {

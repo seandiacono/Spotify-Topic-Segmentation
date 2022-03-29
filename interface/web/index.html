@@ -25,125 +25,195 @@
       <h1 class="title">Podcast Segmentation</h1>
     </div>
 
-    <div class="d-flex justify-content-center container text-center">
+    <div class="container-fluid main-container">
       <div class="row">
-        <div class="col-sm">
-          <h4>Select Segmentation Technique</h4>
-          <p>
-            Choose the Segmentation Technique that you want to be used on the
-            podcast
-          </p>
+        <div class="col-3 form-col">
+          <div class="d-flex justify-content-left">
+            <!-- Form to ask for segmentation parameters -->
+            <form id="segmentation-form" onsubmit="return false">
+              <!-- Podcast Index Input -->
+              <div class="form-group">
+                <label for="podcast-index">Podcast Index</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="podcast-index"
+                  placeholder="Podcast Index"
+                  min="0"
+                  max="99"
+                  value="0"
+                  required
+                />
+              </div>
+
+              <!-- Number of Segments Input -->
+              <div class="form-group">
+                <label for="num-segments">Number of Segments</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="num-segments"
+                  placeholder="Number of Segments"
+                  min="1"
+                  max="99"
+                  value="2"
+                  required
+                />
+              </div>
+
+              <div class="form-check form-check-inline">
+                <label class="radio-inline">
+                  <input
+                    type="radio"
+                    name="segmentation-type"
+                    value="1"
+                    checked
+                  />
+                  Text Tiling
+                </label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <label class="radio-inline">
+                  <input type="radio" name="segmentation-type" value="2" />
+                  TextSplit
+                </label>
+              </div>
+
+              <!-- Window Size Input -->
+              <div class="form-group">
+                <label for="window-size">Window Size (w)</label>
+                <input
+                  type="number"
+                  class="form-control group1"
+                  id="window-size"
+                  name="window-size"
+                  placeholder="Window Size"
+                  min="1"
+                  value="20"
+                />
+              </div>
+
+              <!-- Block Size Input -->
+              <div class="form-group">
+                <label for="block-size">Block Size (k)</label>
+                <input
+                  type="number"
+                  class="form-control group1"
+                  id="block-size"
+                  name="block-size"
+                  placeholder="Block Size"
+                  min="1"
+                  value="10"
+                />
+              </div>
+
+              <!-- Smoothing Width Input -->
+              <div class="form-group">
+                <label for="smoothing-width">Smoothing Width</label>
+                <input
+                  type="number"
+                  class="form-control group1"
+                  id="smoothing-width"
+                  name="smoothing-width"
+                  placeholder="Smoothing Width"
+                  min="1"
+                  value="2"
+                />
+              </div>
+
+              <!-- Smoothing Rounds Input -->
+              <div class="form-group">
+                <label for="smoothing-rounds">Smoothing Rounds</label>
+                <input
+                  type="number"
+                  class="form-control group1"
+                  id="smoothing-rounds"
+                  name="smoothing-rounds"
+                  placeholder="Smoothing Rounds"
+                  min="1"
+                  value="1"
+                />
+              </div>
+
+              <!-- Cutoff Policy Dropdown -->
+              <div class="form-group group1">
+                <label for="cutoff-policy">Cutoff Policy</label>
+                <select
+                  class="form-control group1"
+                  id="cutoff-policy"
+                  name="cutoff-policy"
+                >
+                  <option value="HC">HC</option>
+                  <option value="LC">LC</option>
+                </select>
+              </div>
+
+              <!-- Split Penalty Input -->
+              <div class="form-group group2">
+                <label for="split-penalty">Split Penalty</label>
+                <input
+                  type="number"
+                  class="form-control group2"
+                  id="split-penalty"
+                  name="split-penalty"
+                  placeholder="Split Penalty"
+                  min="0.00"
+                  value="0.05"
+                  step="0.01"
+                  disabled
+                />
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-group text-center">
+                <button
+                  type="submit"
+                  class="btn btn-primary getButton"
+                  onclick="getTranscript()"
+                >
+                  Get Transcript
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-9">
+          <div id="segment-area" class="text-justify">
+            <h4 class="segment-title">
+              <pad> Welcome Back to GRE Vocabulary</pad>
+            </h4>
+            <div class="segment">
+              Welcome back to GRE vocab. Today. We're going to be going over
+              five more words. We're going to talk about their definitions. And
+              then we're going to use them in a modern kind of relevant
+              conversation to get used to hearing them in, you know context you
+              will be used to or that you'll see on the GRE because it's not
+              just going to be word definition. They're going to be used in
+              sentences and you're going to be you're going to have to know how
+              to recognize which word will be right. We're number one esoteric
+              intended for or understood by a small.
+            </div>
+            <h4 class="segment-title"><pad> Anchor Anchor Podcast</pad></h4>
+            <div class="segment">
+              Citigroup esoteric impecunious until lacking funds or without
+              money impecunious inveigle to obtain usually through persuasion
+              and by deception or flattery inveigle odious evoking intense
+              aversion or dislike odious. Marius penny-pinching excessively
+              Thrifty or severe poverty Daenerys let's move on to the next part.
+              Before we continue. We just want to give a quick shout out to the
+              people who make this podcast possible. Anchor anchor is everything
+              you need to make a podcast in one place. They distribute your
+              podcast for you. They have tools that allow you to record and edit
+              everything right from your phone or computer. It's free. They even
+              allow you to put ads in your in your podcast. It's pretty awesome.
+              Go check it out download the free anchor app or go to Anchored off
+              FM to get started. Okay, let's get back to the show.
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Form to ask for segmentation parameters -->
-    <div class="d-flex justify-content-center">
-      <form id="segmentation-form" onsubmit="return false">
-        <div class="form-check form-check-inline">
-          <label class="radio-inline">
-            <input type="radio" name="segmentation-type" value="1" checked />
-            Text Tiling
-          </label>
-        </div>
-
-        <div class="form-check form-check-inline">
-          <label class="radio-inline">
-            <input type="radio" name="segmentation-type" value="2" />
-            TextSplit
-          </label>
-        </div>
-
-        <!-- Window Size Input -->
-        <div class="form-group">
-          <label for="window-size">Window Size (w)</label>
-          <input
-            type="number"
-            class="form-control group1"
-            id="window-size"
-            name="window-size"
-            placeholder="Window Size"
-            min="1"
-            value="20"
-          />
-        </div>
-
-        <!-- Block Size Input -->
-        <div class="form-group">
-          <label for="block-size">Block Size (k)</label>
-          <input
-            type="number"
-            class="form-control group1"
-            id="block-size"
-            name="block-size"
-            placeholder="Block Size"
-            min="1"
-            value="10"
-          />
-        </div>
-
-        <!-- Similarity Method Dropdown -->
-        <div class="form-group group1">
-          <label for="similarity-method">Similarity Method</label>
-          <select class="form-control group1" id="similarity-method" name="similarity-method">
-            <option value="BLOCK_COMPARISON">BLOCK_COMPARISON</option>
-            <option value="VOCABULARY_INTRODUCTION">VOCABULARY_INTRODUCTION</option>
-          </select>
-        </div>
-
-        <!-- Smoothing Width Input -->
-        <div class="form-group">
-          <label for="smoothing-width">Smoothing Width</label>
-          <input
-            type="number"
-            class="form-control group1"
-            id="smoothing-width"
-            name="smoothing-width"
-            placeholder="Smoothing Width"
-            min="1"
-            value="2"
-          />
-        </div>
-
-        <!-- Smoothing Rounds Input -->
-        <div class="form-group">
-          <label for="smoothing-rounds">Smoothing Rounds</label>
-          <input
-            type="number"
-            class="form-control group1"
-            id="smoothing-rounds"
-            name="smoothing-rounds"
-            placeholder="Smoothing Rounds"
-            min="1"
-            value="1"
-          />
-        </div>
-
-        <!-- Cutoff Policy Dropdown -->
-        <div class="form-group group1">
-          <label for="cutoff-policy">Cutoff Policy</label>
-          <select class="form-control group1" id="cutoff-policy" name="cutoff-policy">
-            <option value="HC">HC</option>
-            <option value="LC">LC</option>
-          </select>
-
-        <!-- Submit Button -->
-        <div class="form-group text-center">
-          <button
-            type="submit"
-            class="btn btn-primary getButton"
-            onclick="getTranscript()"
-          >
-            Get Transcript
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <div id="loading-div" class="d-flex justify-content-center">
-      <img id="loading" src="assets/loading.gif" alt="loading" />
-    </div>
-
-    <div id="segment-area"></div>
   </body>
 </html>
