@@ -69,8 +69,6 @@ def textsplit(transcript, split_penalty):
 
     optimal_segmentation = split_optimal(sentence_vectors, penalty)
     segmented_text = get_segments(sentenced_text, optimal_segmentation)
-    print(sentenced_text)
-    print(segmented_text)
 
     # For each segment join the sentences back together
     segmented_text = [''.join(segment) for segment in segmented_text]
@@ -81,6 +79,12 @@ def textsplit(transcript, split_penalty):
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
+
+# TODO: 1. Break down api endpoint into segmentation and summarization
+# TODO: 2. Add api endpoints for BART and Pegasus
+# TODO: 3. Move segmentation type choice to client side
 
 
 @app.post("/segment_summary/")
