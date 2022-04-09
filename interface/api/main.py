@@ -1,9 +1,10 @@
+from os import truncate
 from fastapi import FastAPI
 from text_segmentation.load_transcripts import load_transcripts
 from nltk.tokenize.texttiling import TextTilingTokenizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 import torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import T5ForConditionalGeneration, T5Tokenizer, PegasusForConditionalGeneration, PegasusTokenizer, BartForConditionalGeneration, BartTokenizer
 from fastapi.middleware.cors import CORSMiddleware
 import random
 from pydantic import BaseModel
@@ -32,9 +33,7 @@ transcripts = load_transcripts(
 
 
 class Parameters(BaseModel):
-    segmentation_type: int
     podcast_index: int
-    num_segments: int
     window_size: Optional[int] = None
     block_size: Optional[int] = None
     smoothing_width: Optional[int] = None
@@ -42,6 +41,10 @@ class Parameters(BaseModel):
     cutoff_policy: Optional[str] = None
     split_penalty: Optional[float] = None
 
+
+class Segmentation(BaseModel):
+    segments: list = []
+    num_segments: int
 
 
 def textsplit(transcript, split_penalty):
@@ -81,28 +84,35 @@ def read_root():
     return {"Hello": "World"}
 
 
-
 # TODO: 1. Break down api endpoint into segmentation and summarization
 # TODO: 2. Add api endpoints for BART and Pegasus
 # TODO: 3. Move segmentation type choice to client side
 
-
-@app.post("/segment_summary/")
-def get_segment_summary(params: Parameters):
-
-    # Select Random Transcript
-    # transcript = random.choice(transcripts)
-
+@app.post("/text_tiling")
+def text_tiling(params: Parameters):
     transcript = transcripts[params.podcast_index]
 
-    if params.segmentation_type == 1:
-        # Segment Transcript
-        tt = TextTilingTokenizer(w=params.window_size, k=params.block_size,
-                                 smoothing_width=params.smoothing_width, smoothing_rounds=params.smoothing_rounds, cutoff_policy=params.cutoff_policy)
-        text = tt.tokenize(transcript)
-    else:
-        text = textsplit(transcript, params.split_penalty)
+    # Segment Transcript
+    tt = TextTilingTokenizer(w=params.window_size, k=params.block_size,
+                             smoothing_width=params.smoothing_width, smoothing_rounds=params.smoothing_rounds, cutoff_policy=params.cutoff_policy)
 
+    text = tt.tokenize(transcript)
+
+    return text
+
+
+@app.post("/text_split")
+def text_split(params: Parameters):
+    transcript = transcripts[params.podcast_index]
+
+    # Segment Transcript
+    segmented_text = textsplit(transcript, params.split_penalty)
+
+    return segmented_text
+
+
+@app.post("/t5_summarization")
+def t5_summarization(segmentation: Segmentation):
     # Load Model
     model = T5ForConditionalGeneration.from_pretrained(
         "Michau/t5-base-en-generate-headline")
@@ -114,7 +124,7 @@ def get_segment_summary(params: Parameters):
 
     # For Each Segment Generate Summary
     i = 0
-    for segment in text:
+    for segment in segmentation.segments:
         text_in = "headline: " + segment
 
         encoding = tokenizer.encode_plus(text_in, return_tensors="pt")
@@ -124,7 +134,7 @@ def get_segment_summary(params: Parameters):
         beam_outputs = model.generate(
             input_ids=input_ids,
             attention_mask=attention_masks,
-            max_length=10,
+            max_length=15,
             num_beams=3,
             early_stopping=True,
         )
@@ -133,7 +143,53 @@ def get_segment_summary(params: Parameters):
         obj = {result: segment}
         summary_segment.append(obj)
         i += 1
-        if i >= params.num_segments:
+        if i >= segmentation.num_segments:
+            break
+
+    return {'segments': summary_segment}
+
+
+@app.post("/pegasus_summarization")
+def pegasus_summarization(segmentation: Segmentation):
+    model = PegasusForConditionalGeneration.from_pretrained(
+        "google/pegasus-aeslc")
+    tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-aeslc")
+    model = model.to(device)
+
+    summary_segment = []
+    i = 0
+    for segment in segmentation.segments:
+        batch = tokenizer([segment], truncation=True,
+                          padding="longest", return_tensors="pt").to(device)
+        output = model.generate(**batch)
+        result = tokenizer.batch_decode(output, skip_special_tokens=True)
+        obj = {result[0]: segment}
+        summary_segment.append(obj)
+        i += 1
+        if i >= segmentation.num_segments:
+            break
+
+    return {'segments': summary_segment}
+
+
+@app.post("/bart_summarization")
+def bart_summarization(segmentation: Segmentation):
+    model = BartForConditionalGeneration.from_pretrained(
+        "facebook/bart-large-xsum")
+    tokenizer = BartTokenizer.from_pretrained("facebook/bart-large-xsum")
+    model = model.to(device)
+
+    summary_segment = []
+    i = 0
+    for segment in segmentation.segments:
+        batch = tokenizer([segment], return_tensors="pt")
+        output = model.generate(batch["input_ids"], num_beams=4)
+        result = tokenizer.batch_decode(
+            output, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+        obj = {result[0]: segment}
+        summary_segment.append(obj)
+        i += 1
+        if i >= segmentation.num_segments:
             break
 
     return {'segments': summary_segment}
