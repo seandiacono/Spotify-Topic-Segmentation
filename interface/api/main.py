@@ -3,8 +3,6 @@ from fastapi import FastAPI
 from text_segmentation.load_transcripts import load_transcripts
 from nltk.tokenize.texttiling import TextTilingTokenizer
 from nltk.tokenize import sent_tokenize, word_tokenize
-import torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer, PegasusForConditionalGeneration, PegasusTokenizer, BartForConditionalGeneration, BartTokenizer
 from fastapi.middleware.cors import CORSMiddleware
 import random
 from pydantic import BaseModel
@@ -15,8 +13,9 @@ from textsplit.tools import SimpleSentenceTokenizer
 from textsplit.tools import get_penalty, get_segments
 from textsplit.algorithm import split_optimal
 from typing import Optional
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+from text_summarization.algorithms.bart import Bart
+from text_summarization.algorithms.pegasus import Pegasus
+from text_summarization.algorithms.t5 import T5
 
 app = FastAPI()
 
@@ -84,10 +83,6 @@ def read_root():
     return {"Hello": "World"}
 
 
-# TODO: 1. Break down api endpoint into segmentation and summarization
-# TODO: 2. Add api endpoints for BART and Pegasus
-# TODO: 3. Move segmentation type choice to client side
-
 @app.post("/text_tiling")
 def text_tiling(params: Parameters):
     transcript = transcripts[params.podcast_index]
@@ -113,83 +108,29 @@ def text_split(params: Parameters):
 
 @app.post("/t5_summarization")
 def t5_summarization(segmentation: Segmentation):
-    # Load Model
-    model = T5ForConditionalGeneration.from_pretrained(
-        "Michau/t5-base-en-generate-headline")
-    tokenizer = T5Tokenizer.from_pretrained(
-        "Michau/t5-base-en-generate-headline")
-    model = model.to(device)
+    # Summarize the segmented transcript
+    t5 = T5()
 
-    summary_segment = []
+    summary = t5.summarize(segmentation.segments)
 
-    # For Each Segment Generate Summary
-    i = 0
-    for segment in segmentation.segments:
-        text_in = "headline: " + segment
-
-        encoding = tokenizer.encode_plus(text_in, return_tensors="pt")
-        input_ids = encoding["input_ids"].to(device)
-        attention_masks = encoding["attention_mask"].to(device)
-
-        beam_outputs = model.generate(
-            input_ids=input_ids,
-            attention_mask=attention_masks,
-            max_length=15,
-            num_beams=3,
-            early_stopping=True,
-        )
-
-        result = tokenizer.decode(beam_outputs[0])
-        obj = {result: segment}
-        summary_segment.append(obj)
-        i += 1
-        if i >= segmentation.num_segments:
-            break
-
-    return {'segments': summary_segment}
+    return {'segments': summary}
 
 
 @app.post("/pegasus_summarization")
 def pegasus_summarization(segmentation: Segmentation):
-    model = PegasusForConditionalGeneration.from_pretrained(
-        "google/pegasus-aeslc")
-    tokenizer = PegasusTokenizer.from_pretrained("google/pegasus-aeslc")
-    model = model.to(device)
+    # Summarize the segmented transcript
+    pegasus = Pegasus()
 
-    summary_segment = []
-    i = 0
-    for segment in segmentation.segments:
-        batch = tokenizer([segment], truncation=True,
-                          padding="longest", return_tensors="pt").to(device)
-        output = model.generate(**batch)
-        result = tokenizer.batch_decode(output, skip_special_tokens=True)
-        obj = {result[0]: segment}
-        summary_segment.append(obj)
-        i += 1
-        if i >= segmentation.num_segments:
-            break
+    summary = pegasus.summarize(segmentation.segments)
 
-    return {'segments': summary_segment}
+    return {'segments': summary}
 
 
 @app.post("/bart_summarization")
 def bart_summarization(segmentation: Segmentation):
-    model = BartForConditionalGeneration.from_pretrained(
-        "facebook/bart-large-xsum")
-    tokenizer = BartTokenizer.from_pretrained("facebook/bart-large-xsum")
-    model = model.to(device)
+    # Summarize the segmented transcript
+    bart = Bart()
 
-    summary_segment = []
-    i = 0
-    for segment in segmentation.segments:
-        batch = tokenizer([segment], return_tensors="pt")
-        output = model.generate(batch["input_ids"], num_beams=4)
-        result = tokenizer.batch_decode(
-            output, skip_special_tokens=True, clean_up_tokenization_spaces=False)
-        obj = {result[0]: segment}
-        summary_segment.append(obj)
-        i += 1
-        if i >= segmentation.num_segments:
-            break
+    summary = bart.summarize(segmentation.segments)
 
-    return {'segments': summary_segment}
+    return {'segments': summary}
