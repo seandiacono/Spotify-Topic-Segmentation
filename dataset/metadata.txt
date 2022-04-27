@@ -1,4 +1,12 @@
-ReplyAll (7gozmLqbcbr6PScMjc0Zl4)
-
-42S7rjD6Y9g5GztuLS0Zzx
-3qBoc9iZ6JYVqIBTlkMga7
+episode_id, show_name, show_id
+0ERGF0SNWOCUSjecWZGJ82, Dissect, 2b025hq3gJ17tQdxS3aV43
+0XuoICBTNepqsXLyYqRCLH, The Growth Mindset, 2ZYKAhvHgcM0xaSB65hoec
+0g4S43qvuB4PnOIkxeybiY, 404 Podcast Found, 6uCFGjiOHJW4GlDq75GS57
+13ytaAuI0QxlSHc1JkOieu, Excellent Question, 7ciegrVRKbAYpFqcTnA4bh
+2yE26ainUewuTJiHZAeQQL, Crimetown, 5C9yXrX999QNS1Q62IlXvc
+2vwBdQNQaktMXYKTtwqK6R, Let's Be Realistic, 4S7t0Ps0bElO2UPYZLfRnt
+3PQeaTjalnUrlwdvyTJiCf, The Premature Millionaire Show, 6GmJvPWD70fR09iuxsUVS1
+3Du1ESxXKflc1S7QPEqQaT, The Naked Student, 2hZEAiWSgzlSNiq51esZ01
+3rt0yCTZXrYcpFvuejcdoZ, Every Little Thing, 2dY2l2v95zz9HTlYvDSAdA
+3qBoc9iZ6JYVqIBTlkMga7, ReplayAll, 7gozmLqbcbr6PScMjc0Zl4
+5ti2jHEnMMK3oqUaHdqiaX, Not Guilty, 0tnf9RnSMzA82ZVWMZ0sWE

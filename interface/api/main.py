@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from text_segmentation.load_transcripts import load_transcripts
+from text_segmentation.load_transcripts_old import load_transcripts
 from nltk.tokenize.texttiling import TextTilingTokenizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 import torch

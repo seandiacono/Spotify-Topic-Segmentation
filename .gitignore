@@ -175,3 +175,8 @@ text_summarization/data/
 
 dataset/audio/*
 dataset/transcripts/*
+dataset/annotations/*
+
+GoogleNews-vectors-negative300.bin.gz
+
+algorithms/text8/*
