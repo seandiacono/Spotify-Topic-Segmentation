@@ -177,6 +177,4 @@ dataset/audio/*
 dataset/transcripts/*
 dataset/annotations/*
 
-GoogleNews-vectors-negative300.bin.gz
-
 text_segmentation/algorithms/text8/*
