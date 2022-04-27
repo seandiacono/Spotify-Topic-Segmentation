@@ -179,4 +179,4 @@ dataset/annotations/*
 
 GoogleNews-vectors-negative300.bin.gz
 
-algorithms/text8/*
+text_segmentation/algorithms/text8/*
