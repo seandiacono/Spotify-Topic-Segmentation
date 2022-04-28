@@ -1,9 +1,8 @@
+from os import truncate
 from fastapi import FastAPI
 from text_segmentation.load_transcripts_old import load_transcripts
 from nltk.tokenize.texttiling import TextTilingTokenizer
 from nltk.tokenize import sent_tokenize, word_tokenize
-import torch
-from transformers import T5ForConditionalGeneration, T5Tokenizer
 from fastapi.middleware.cors import CORSMiddleware
 import random
 from pydantic import BaseModel
@@ -14,8 +13,9 @@ from textsplit.tools import SimpleSentenceTokenizer
 from textsplit.tools import get_penalty, get_segments
 from textsplit.algorithm import split_optimal
 from typing import Optional
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+from text_summarization.algorithms.bart import Bart
+from text_summarization.algorithms.pegasus import Pegasus
+from text_summarization.algorithms.t5 import T5
 
 app = FastAPI()
 
@@ -32,9 +32,7 @@ transcripts = load_transcripts(
 
 
 class Parameters(BaseModel):
-    segmentation_type: int
     podcast_index: int
-    num_segments: int
     window_size: Optional[int] = None
     block_size: Optional[int] = None
     smoothing_width: Optional[int] = None
@@ -42,6 +40,10 @@ class Parameters(BaseModel):
     cutoff_policy: Optional[str] = None
     split_penalty: Optional[float] = None
 
+
+class Segmentation(BaseModel):
+    segments: list = []
+    num_segments: int
 
 
 def textsplit(transcript, split_penalty):
@@ -81,59 +83,54 @@ def read_root():
     return {"Hello": "World"}
 
 
-
-# TODO: 1. Break down api endpoint into segmentation and summarization
-# TODO: 2. Add api endpoints for BART and Pegasus
-# TODO: 3. Move segmentation type choice to client side
-
-
-@app.post("/segment_summary/")
-def get_segment_summary(params: Parameters):
-
-    # Select Random Transcript
-    # transcript = random.choice(transcripts)
-
+@app.post("/text_tiling")
+def text_tiling(params: Parameters):
     transcript = transcripts[params.podcast_index]
 
-    if params.segmentation_type == 1:
-        # Segment Transcript
-        tt = TextTilingTokenizer(w=params.window_size, k=params.block_size,
-                                 smoothing_width=params.smoothing_width, smoothing_rounds=params.smoothing_rounds, cutoff_policy=params.cutoff_policy)
-        text = tt.tokenize(transcript)
-    else:
-        text = textsplit(transcript, params.split_penalty)
+    # Segment Transcript
+    tt = TextTilingTokenizer(w=params.window_size, k=params.block_size,
+                             smoothing_width=params.smoothing_width, smoothing_rounds=params.smoothing_rounds, cutoff_policy=params.cutoff_policy)
 
-    # Load Model
-    model = T5ForConditionalGeneration.from_pretrained(
-        "Michau/t5-base-en-generate-headline")
-    tokenizer = T5Tokenizer.from_pretrained(
-        "Michau/t5-base-en-generate-headline")
-    model = model.to(device)
+    text = tt.tokenize(transcript)
 
-    summary_segment = []
+    return text
 
-    # For Each Segment Generate Summary
-    i = 0
-    for segment in text:
-        text_in = "headline: " + segment
 
-        encoding = tokenizer.encode_plus(text_in, return_tensors="pt")
-        input_ids = encoding["input_ids"].to(device)
-        attention_masks = encoding["attention_mask"].to(device)
+@app.post("/text_split")
+def text_split(params: Parameters):
+    transcript = transcripts[params.podcast_index]
 
-        beam_outputs = model.generate(
-            input_ids=input_ids,
-            attention_mask=attention_masks,
-            max_length=10,
-            num_beams=3,
-            early_stopping=True,
-        )
+    # Segment Transcript
+    segmented_text = textsplit(transcript, params.split_penalty)
 
-        result = tokenizer.decode(beam_outputs[0])
-        obj = {result: segment}
-        summary_segment.append(obj)
-        i += 1
-        if i >= params.num_segments:
-            break
+    return segmented_text
 
-    return {'segments': summary_segment}
+
+@app.post("/t5_summarization")
+def t5_summarization(segmentation: Segmentation):
+    # Summarize the segmented transcript
+    t5 = T5()
+
+    summary = t5.summarize(segmentation.segments)
+
+    return {'segments': summary}
+
+
+@app.post("/pegasus_summarization")
+def pegasus_summarization(segmentation: Segmentation):
+    # Summarize the segmented transcript
+    pegasus = Pegasus()
+
+    summary = pegasus.summarize(segmentation.segments)
+
+    return {'segments': summary}
+
+
+@app.post("/bart_summarization")
+def bart_summarization(segmentation: Segmentation):
+    # Summarize the segmented transcript
+    bart = Bart()
+
+    summary = bart.summarize(segmentation.segments)
+
+    return {'segments': summary}
