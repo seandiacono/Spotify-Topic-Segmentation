@@ -4,7 +4,7 @@ class TextTiling:
 
     def __init__(self, w=20, k=10, policy=0):
         # 0 policy is liberal, 1 is conservative
-        self.segmenter =  TextTilingTokenizer(w, k, cutoff_policy=policy)
+        self.segmenter = TextTilingTokenizer(w, k, cutoff_policy=policy)
 
     def segment(self, transcript):
         segments = self.segmenter.tokenize(transcript)
