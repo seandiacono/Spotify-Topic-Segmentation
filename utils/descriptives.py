@@ -1,26 +1,18 @@
 # Script to generate average word count for our sample
 import os
 import json
+from load_transcripts import load_all_transcripts
 
-dir = 'dataset/transcripts/'
 
-for transcript in os.listdir(dir):
-    with open(dir + transcript, 'r') as f:
-        data = json.load(f)
+transcripts_as_strings = load_all_transcripts(
+    path="dataset/transcripts/", as_string=True)
 
-        transcript = ''
-        lengths = []
-        for section in data['results']:
-            try:
-                transcript += section['alternatives'][0]['transcript']
-                transcript += ' '
-            except:
-                continue
-        
-        transcript = transcript.split()
-        lengths.append(len(transcript))
+lengths = []
+
+for transcript in transcripts_as_strings.values():
+    words = transcript.split()
+    lengths.append(len(words))
 
 # Calculate the average word count
 avg = sum(lengths) / len(lengths)
 print(avg)
-        

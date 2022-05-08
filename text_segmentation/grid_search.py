@@ -2,7 +2,6 @@ import segeval
 from load_transcripts import load_all_transcripts
 from load_annotations import load_all_annotations
 from algorithms import TextTiling, TextSplit, Baseline
-from tqdm import tqdm
 
 transcripts_as_strings = load_all_transcripts(
     path="../dataset/transcripts/", as_string=True)

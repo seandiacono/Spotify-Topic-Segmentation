@@ -1,0 +1,75 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.03,0.97)},
+  anchor=north west,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+x grid style={darkgray176},
+xlabel={Episodes},
+xmin=0.55, xmax=10.45,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Pk Score},
+ymin=0.286760191944226, ymax=0.67523904983603,
+ytick style={color=black}
+]
+\addplot [semithick, steelblue31119180]
+table {%
+1 0.520025944543538
+2 0.458537782139352
+3 0.446944030356417
+4 0.540396445659604
+5 0.496166720656517
+6 0.625087108013937
+7 0.562292358803987
+8 0.657580919931857
+9 0.508926326376666
+10 0.526165167620605
+};
+\addlegendentry{Baseline}
+\addplot [semithick, darkorange25512714]
+table {%
+1 0.516045799064667
+2 0.483933787731256
+3 0.465840183263711
+4 0.486152592994841
+5 0.536064690026954
+6 0.484356093344857
+7 0.479940564635958
+8 0.429336629583848
+9 0.406093906093906
+10 0.304418321848399
+};
+\addlegendentry{TextTiling}
+\addplot [semithick, forestgreen4416044]
+table {%
+1 0.395961227786753
+2 0.434739941118744
+3 0.395101601399542
+4 0.4631507775524
+5 0.311454172514304
+6 0.413230240549828
+7 0.413269516421852
+8 0.362402303578774
+9 0.415472071181414
+10 0.504385964912281
+};
+\addlegendentry{TextSplit}
+\end{axis}
+
+\end{tikzpicture}

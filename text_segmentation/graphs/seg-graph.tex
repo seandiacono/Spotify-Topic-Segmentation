@@ -1,0 +1,252 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{lightblue}{RGB}{173,216,230}
+\definecolor{lightgreen}{RGB}{144,238,144}
+\definecolor{pink}{RGB}{255,192,203}
+
+\begin{groupplot}[group style={group size=2 by 1}]
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={Pk Scores},
+x grid style={darkgray176},
+xlabel={Segmenters},
+xmin=0.5, xmax=3.5,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Scores},
+ymajorgrids,
+ymin=0.239109181552262, ymax=0.605784609372493,
+ytick style={color=black}
+]
+\path [draw=black, fill=pink]
+(axis cs:0.85,0.411811112189385)
+--(axis cs:1.15,0.411811112189385)
+--(axis cs:1.15,0.522353104561343)
+--(axis cs:0.85,0.522353104561343)
+--(axis cs:0.85,0.411811112189385)
+--cycle;
+\addplot [black]
+table {%
+1 0.411811112189385
+1 0.313609467455621
+};
+\addplot [black]
+table {%
+1 0.522353104561343
+1 0.589117544471573
+};
+\addplot [black]
+table {%
+0.925 0.313609467455621
+1.075 0.313609467455621
+};
+\addplot [black]
+table {%
+0.925 0.589117544471573
+1.075 0.589117544471573
+};
+\path [draw=black, fill=lightblue]
+(axis cs:1.85,0.425947396029756)
+--(axis cs:2.15,0.425947396029756)
+--(axis cs:2.15,0.480744634829876)
+--(axis cs:1.85,0.480744634829876)
+--(axis cs:1.85,0.425947396029756)
+--cycle;
+\addplot [black]
+table {%
+2 0.425947396029756
+2 0.405594405594406
+};
+\addplot [black]
+table {%
+2 0.480744634829876
+2 0.530673854447439
+};
+\addplot [black]
+table {%
+1.925 0.405594405594406
+2.075 0.405594405594406
+};
+\addplot [black]
+table {%
+1.925 0.530673854447439
+2.075 0.530673854447439
+};
+\addplot [black, mark=o, mark size=3, mark options={solid,fill opacity=0}, only marks]
+table {%
+2 0.255776246453182
+};
+\path [draw=black, fill=lightgreen]
+(axis cs:2.85,0.395316507996345)
+--(axis cs:3.15,0.395316507996345)
+--(axis cs:3.15,0.429922973634411)
+--(axis cs:2.85,0.429922973634411)
+--(axis cs:2.85,0.395316507996345)
+--cycle;
+\addplot [black]
+table {%
+3 0.395316507996345
+3 0.362402303578774
+};
+\addplot [black]
+table {%
+3 0.429922973634411
+3 0.4631507775524
+};
+\addplot [black]
+table {%
+2.925 0.362402303578774
+3.075 0.362402303578774
+};
+\addplot [black]
+table {%
+2.925 0.4631507775524
+3.075 0.4631507775524
+};
+\addplot [black, mark=o, mark size=3, mark options={solid,fill opacity=0}, only marks]
+table {%
+3 0.311454172514304
+3 0.504385964912281
+};
+\addplot [darkorange25512714]
+table {%
+0.85 0.465403913537213
+1.15 0.465403913537213
+};
+\addplot [darkorange25512714]
+table {%
+1.85 0.46446895625322
+2.15 0.46446895625322
+};
+\addplot [darkorange25512714]
+table {%
+2.85 0.41324987848584
+3.15 0.41324987848584
+};
+
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={Wd Scores},
+x grid style={darkgray176},
+xlabel={Segmenters},
+xmin=0.5, xmax=3.5,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Scores},
+ymajorgrids,
+ymin=0.286096682078403, ymax=0.689172757018301,
+ytick style={color=black}
+]
+\path [draw=black, fill=pink]
+(axis cs:0.85,0.480330194159717)
+--(axis cs:1.15,0.480330194159717)
+--(axis cs:1.15,0.596647439550724)
+--(axis cs:0.85,0.596647439550724)
+--(axis cs:0.85,0.480330194159717)
+--cycle;
+\addplot [black]
+table {%
+1 0.480330194159717
+1 0.408888288531676
+};
+\addplot [black]
+table {%
+1 0.596647439550724
+1 0.670851117248305
+};
+\addplot [black]
+table {%
+0.925 0.408888288531676
+1.075 0.408888288531676
+};
+\addplot [black]
+table {%
+0.925 0.670851117248305
+1.075 0.670851117248305
+};
+\path [draw=black, fill=lightblue]
+(axis cs:1.85,0.438462518003814)
+--(axis cs:2.15,0.438462518003814)
+--(axis cs:2.15,0.485703468082345)
+--(axis cs:1.85,0.485703468082345)
+--(axis cs:1.85,0.438462518003814)
+--cycle;
+\addplot [black]
+table {%
+2 0.438462518003814
+2 0.406093906093906
+};
+\addplot [black]
+table {%
+2 0.485703468082345
+2 0.536064690026954
+};
+\addplot [black]
+table {%
+1.925 0.406093906093906
+2.075 0.406093906093906
+};
+\addplot [black]
+table {%
+1.925 0.536064690026954
+2.075 0.536064690026954
+};
+\addplot [black, mark=o, mark size=3, mark options={solid,fill opacity=0}, only marks]
+table {%
+2 0.304418321848399
+};
+\path [draw=black, fill=lightgreen]
+(axis cs:2.85,0.395316507996345)
+--(axis cs:3.15,0.395316507996345)
+--(axis cs:3.15,0.429922973634411)
+--(axis cs:2.85,0.429922973634411)
+--(axis cs:2.85,0.395316507996345)
+--cycle;
+\addplot [black]
+table {%
+3 0.395316507996345
+3 0.362402303578774
+};
+\addplot [black]
+table {%
+3 0.429922973634411
+3 0.4631507775524
+};
+\addplot [black]
+table {%
+2.925 0.362402303578774
+3.075 0.362402303578774
+};
+\addplot [black]
+table {%
+2.925 0.4631507775524
+3.075 0.4631507775524
+};
+\addplot [black, mark=o, mark size=3, mark options={solid,fill opacity=0}, only marks]
+table {%
+3 0.311454172514304
+3 0.504385964912281
+};
+\addplot [darkorange25512714]
+table {%
+0.85 0.504580362870291
+1.15 0.504580362870291
+};
+\addplot [darkorange25512714]
+table {%
+1.85 0.481937176183607
+2.15 0.481937176183607
+};
+\addplot [darkorange25512714]
+table {%
+2.85 0.41324987848584
+3.15 0.41324987848584
+};
+\end{groupplot}
+
+\end{tikzpicture}
