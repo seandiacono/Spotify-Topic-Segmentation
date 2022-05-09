@@ -1,21 +1,20 @@
-from os import truncate
 from fastapi import FastAPI
 from text_segmentation.load_transcripts_old import load_transcripts
 from nltk.tokenize.texttiling import TextTilingTokenizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 from fastapi.middleware.cors import CORSMiddleware
-import random
 from pydantic import BaseModel
 from sklearn.feature_extraction.text import CountVectorizer
 from gensim.models import word2vec
 import pandas as pd
 from textsplit.tools import SimpleSentenceTokenizer
-from textsplit.tools import get_penalty, get_segments
+from textsplit.tools import get_segments
 from textsplit.algorithm import split_optimal
 from typing import Optional
 from text_summarization.algorithms.bart import Bart
 from text_summarization.algorithms.pegasus import Pegasus
 from text_summarization.algorithms.t5 import T5
+import json
 
 app = FastAPI()
 
@@ -134,3 +133,21 @@ def bart_summarization(segmentation: Segmentation):
     summary = bart.summarize(segmentation.segments)
 
     return {'segments': summary}
+
+
+@app.get("/get_segments")
+def get_segments():
+    # Load segment json file and return it
+    with open('dataset/segments/segments_pred.json') as f:
+        segments = json.load(f)
+
+    return segments
+
+
+@app.get("/get_summaries")
+def get_summaries():
+    # Load summary json file and return it
+    with open('dataset/segments/summaries_pred.json') as f:
+        summaries = json.load(f)
+
+    return summaries
