@@ -151,3 +151,11 @@ def get_summaries():
         summaries = json.load(f)
 
     return summaries
+
+@app.get("/timestamp_summaries")
+def get_timestamp_summaries():
+    # Load summary json file and return it
+    with open('dataset/segments/segmented_summarized_episodes.json') as f:
+        summaries = json.load(f)
+
+    return summaries
