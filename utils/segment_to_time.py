@@ -25,15 +25,17 @@ for episode in segments.keys():
                                                          len(segment_word_list)]
                 # Get just the words
                 words = [x['word'] for x in potential_segment]
-                # Check if the segment is the same and if it is, add the end time
+                # Check if the segment is the same and if it is, add the start time
                 if words == segment_word_list:
-                    segment_times.append(potential_segment[-1]['endTime'])
+                    segment_times.append(potential_segment[0]['startTime'])
 
     # Join segment times and summaries
     segment_times_and_summaries = []
     for i in range(len(segment_times)):
+        # Change segment time to float
+        segment_times[i] = float(segment_times[i].replace('s', ''))
         segment_times_and_summaries.append(
-            {'segment_time': segment_times[i], 'summary': episode_summaries[i]})
+            {'time': segment_times[i], 'text': episode_summaries[i]})
     segmented_summarized_episodes[episode] = segment_times_and_summaries
 
 # Save the segmented and summarized episodes

@@ -1,0 +1,95 @@
+@import url('satoshi.css');
+
+video{
+  object-fit: cover;
+}
+
+body {
+  font-family: 'Satoshi-Medium';
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+}
+
+.vjs-theme-city .vjs-control-bar{
+  background-image: none !important;
+}
+
+.vjs-theme-city .vjs-picture-in-picture-control .vjs-icon-placeholder{
+  display: none !important;
+}
+
+.vjs-theme-city .vjs-fullscreen-control .vjs-icon-placeholder{
+  display: none !important;
+}
+
+.vjs-theme-city .vjs-volume-level{
+  display: none !important;
+}
+
+.vjs-theme-city .vjs-volume-bar{
+  display: none !important;
+}
+
+.video-js .vjs-progress-holder{
+  height: 10px !important;
+}
+
+.video-js .vjs-load-progress div{
+  background-color: hsla(0,0%,100%,0.3) !important;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.vjs-theme-city .vjs-play-progress{
+  background-color: #fff !important;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.vjs-marker{
+  background-color: #1db954 !important;
+  width: 10px !important;
+}
+
+.video-js .vjs-control-bar{
+  width: 75% !important;
+  margin: auto !important;
+}
+
+.vjs-tip .vjs-tip-inner{
+  font-family: 'Satoshi-Medium';
+  font-size: 2em;
+  color: #fff;
+  background-color: transparent;
+  width: 200px
+}
+
+.vjs-theme-city .vjs-remaining-time{
+  font-family: 'Satoshi-Bold';
+  font-size: 2em;
+}
+
+.vjs-theme-city .vjs-control-bar{
+  height: 17%;
+}
+
+.vjs-theme-city .vjs-play-control{
+  font-size: 4em;
+}
+
+.vjs-theme-city .vjs-progress-control{
+  top: -30;
+}
+
+.vjs-time-tooltip {
+  display: none !important;
+}
+
+.vjs-tip .vjs-tip-arrow{
+  display: none !important;
+}
