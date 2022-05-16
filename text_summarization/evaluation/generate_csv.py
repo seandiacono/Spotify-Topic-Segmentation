@@ -1,10 +1,9 @@
 import pandas as pd
-from transformers import BART_PRETRAINED_MODEL_ARCHIVE_LIST
 
 # Load responses csv file
-df = pd.read_csv('text_summarization/evaluation/responses.csv')
+df = pd.read_csv('text_summarization/evaluation/responses.csv', header=None)
 
-# Iterate over each
+# Iterate over each row in the csv file
 segments = []
 no_of_rows = 0
 for index, row in df.iterrows():

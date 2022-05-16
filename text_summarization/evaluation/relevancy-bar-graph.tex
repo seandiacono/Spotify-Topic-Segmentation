@@ -1,0 +1,64 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{crimson2143940}{RGB}{214,39,40}
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{mediumpurple148103189}{RGB}{148,103,189}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{axis}[
+legend cell align={left},
+legend style={fill opacity=0.8, draw opacity=1, text opacity=1, draw=lightgray204},
+tick align=outside,
+tick pos=left,
+x grid style={darkgray176},
+xmin=-0.5, xmax=3.5,
+xtick style={color=black},
+xtick={0,1,2,3},
+xticklabels={HUMAN,T5,BART,PEGASUS},
+y grid style={darkgray176},
+ylabel={Frequency},
+ymin=0, ymax=115.5,
+ytick style={color=black}
+]
+\draw[draw=none,fill=steelblue31119180] (axis cs:-0.25,0) rectangle (axis cs:-0.15,17);
+\addlegendimage{ybar,ybar legend,draw=none,fill=steelblue31119180}
+\addlegendentry{1}
+
+\draw[draw=none,fill=steelblue31119180] (axis cs:0.75,0) rectangle (axis cs:0.85,25);
+\draw[draw=none,fill=steelblue31119180] (axis cs:1.75,0) rectangle (axis cs:1.85,70);
+\draw[draw=none,fill=steelblue31119180] (axis cs:2.75,0) rectangle (axis cs:2.85,110);
+\draw[draw=none,fill=darkorange25512714] (axis cs:-0.15,0) rectangle (axis cs:-0.05,27);
+\addlegendimage{ybar,ybar legend,draw=none,fill=darkorange25512714}
+\addlegendentry{2}
+
+\draw[draw=none,fill=darkorange25512714] (axis cs:0.85,0) rectangle (axis cs:0.95,50);
+\draw[draw=none,fill=darkorange25512714] (axis cs:1.85,0) rectangle (axis cs:1.95,70);
+\draw[draw=none,fill=darkorange25512714] (axis cs:2.85,0) rectangle (axis cs:2.95,49);
+\draw[draw=none,fill=forestgreen4416044] (axis cs:-0.05,0) rectangle (axis cs:0.05,63);
+\addlegendimage{ybar,ybar legend,draw=none,fill=forestgreen4416044}
+\addlegendentry{3}
+
+\draw[draw=none,fill=forestgreen4416044] (axis cs:0.95,0) rectangle (axis cs:1.05,51);
+\draw[draw=none,fill=forestgreen4416044] (axis cs:1.95,0) rectangle (axis cs:2.05,37);
+\draw[draw=none,fill=forestgreen4416044] (axis cs:2.95,0) rectangle (axis cs:3.05,32);
+\draw[draw=none,fill=crimson2143940] (axis cs:0.05,0) rectangle (axis cs:0.15,66);
+\addlegendimage{ybar,ybar legend,draw=none,fill=crimson2143940}
+\addlegendentry{4}
+
+\draw[draw=none,fill=crimson2143940] (axis cs:1.05,0) rectangle (axis cs:1.15,64);
+\draw[draw=none,fill=crimson2143940] (axis cs:2.05,0) rectangle (axis cs:2.15,37);
+\draw[draw=none,fill=crimson2143940] (axis cs:3.05,0) rectangle (axis cs:3.15,24);
+\draw[draw=none,fill=mediumpurple148103189] (axis cs:0.15,0) rectangle (axis cs:0.25,77);
+\addlegendimage{ybar,ybar legend,draw=none,fill=mediumpurple148103189}
+\addlegendentry{5}
+
+\draw[draw=none,fill=mediumpurple148103189] (axis cs:1.15,0) rectangle (axis cs:1.25,60);
+\draw[draw=none,fill=mediumpurple148103189] (axis cs:2.15,0) rectangle (axis cs:2.25,36);
+\draw[draw=none,fill=mediumpurple148103189] (axis cs:3.15,0) rectangle (axis cs:3.25,35);
+\end{axis}
+
+\end{tikzpicture}

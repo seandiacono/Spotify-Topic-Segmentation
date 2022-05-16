@@ -178,3 +178,10 @@ dataset/transcripts/*
 dataset/annotations/*
 
 text_segmentation/algorithms/text8/*
+
+*.ogg
+*.png
+*.eot 
+*.ttf
+*.woff
+*.woff2
